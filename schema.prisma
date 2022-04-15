@@ -11,22 +11,39 @@ generator client {
   output   = "node_modules/.prisma/client"
 }
 
-model Task {
-  id           String    @id @default(cuid())
-  label        String    @default("")
-  priority     String?
-  isComplete   Boolean   @default(false)
-  assignedTo   Person?   @relation("Task_assignedTo", fields: [assignedToId], references: [id])
-  assignedToId String?   @map("assignedTo")
-  finishBy     DateTime?
-
-  @@index([assignedToId])
+model User {
+  id       String @id @default(cuid())
+  email    String @unique @default("")
+  password String
 }
 
-model Person {
-  id       String  @id @default(cuid())
-  name     String  @default("")
-  email    String  @unique @default("")
-  password String?
-  tasks    Task[]  @relation("Task_assignedTo")
+model Attendant {
+  id               String        @id @default(cuid())
+  firstName        String        @default("")
+  lastName         String        @default("")
+  email            String        @unique @default("")
+  phone            String        @default("")
+  congregation     Congregation? @relation("Attendant_congregation", fields: [congregationId], references: [id])
+  congregationId   String?       @map("congregation")
+  keyman           Department?   @relation("Attendant_keyman", fields: [keymanId], references: [id])
+  keymanId         String?       @unique @map("keyman")
+  department       Department?   @relation("Attendant_department", fields: [departmentId], references: [id])
+  departmentId     String?       @map("department")
+  badgeIsCheckedIn Boolean       @default(false)
+
+  @@index([congregationId])
+  @@index([departmentId])
+}
+
+model Department {
+  id         String      @id @default(cuid())
+  name       String      @default("")
+  keyman     Attendant?  @relation("Attendant_keyman")
+  attendants Attendant[] @relation("Attendant_department")
+}
+
+model Congregation {
+  id         String      @id @default(cuid())
+  name       String      @default("")
+  publishers Attendant[] @relation("Attendant_congregation")
 }
