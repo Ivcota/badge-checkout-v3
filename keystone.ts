@@ -32,6 +32,11 @@ export default withAuth(
         origin: ["https://studio.apollographql.com", "http://localhost:3000"],
       },
     },
+    graphql: {
+      apolloConfig: {
+        introspection: true,
+      },
+    },
     lists,
     // We add our session configuration to the system here.
     session,
