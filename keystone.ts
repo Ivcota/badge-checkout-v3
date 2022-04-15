@@ -26,7 +26,12 @@ export default withAuth(
       useMigrations: true,
       url: DATABASE_URL,
     },
-    server: { port: PORT },
+    server: {
+      port: PORT,
+      cors: {
+        origin: ["https://studio.apollographql.com", "http://localhost:3000"],
+      },
+    },
     lists,
     // We add our session configuration to the system here.
     session,
