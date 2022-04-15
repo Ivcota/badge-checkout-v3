@@ -29,7 +29,7 @@ export default withAuth(
     server: {
       port: PORT,
       cors: {
-        origin: ["https://studio.apollographql.com", "http://localhost:3000"],
+        origin: ["https://studio.apollographql.com", "http://localhost:3000", "https://www.azconvention.org/"],
       },
     },
     graphql: {
