@@ -29,6 +29,7 @@ export default withAuth(
     server: {
       port: PORT,
       cors: {
+        credentials: true,
         origin: [
           "https://studio.apollographql.com",
           "http://localhost:3000",
